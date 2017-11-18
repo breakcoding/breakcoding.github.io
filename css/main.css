@@ -1,0 +1,339 @@
+/*-------------------------------------------------------------------------
+Elementos que no dependen de ningun tamaño
+--------------------------------------------------------------------*/
+body {
+    font-family: "Hind", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    -webkit-font-feature-settings: "kern", "liga", "pnum";
+    font-feature-settings: "kern", "liga", "pnum";
+    font-size: .9rem;
+    line-height: 1.7;
+    min-height: 100vh;
+    min-width: 320px; 
+    -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale; 
+	background-color: black;
+	color: white;
+}
+
+a:hover {
+	color:white !important;
+}
+
+/*Tipografia*/
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Hind", "Calibre", "Helvetica Neue", "Helvetica", "Arial", sans-serif;    
+    color: white;
+}
+
+.blue{
+	color: #3b5998;
+}
+
+.yellow{
+	color: yellow;
+}
+
+.orange {
+	color: orange;
+}
+
+.white {
+	color: white;
+}
+
+.black{
+	color: black;
+}
+
+
+
+.content{
+	display: flex;
+}
+
+.content-header {
+	padding: 150px 0;
+}
+
+/*Header despues de NavBar*/
+.header-nav {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;    
+}
+
+.content-header .content-background {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 180%;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+	background-position: center center !important;     
+	z-index: -5;  
+}
+.header-nav .gradient {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: -webkit-gradient(linear,left top, right bottom,from(#002f4b),to(#dc45));
+    background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
+    opacity: 0.85; 
+} 
+
+.header-nav .gradient-result {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #34e89e;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #0f3443, #34e89e);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */	
+	/* background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); */
+	/* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
+    opacity: 0.85; 
+} 
+
+.header-nav .entry-header h1 { 
+    line-height: 70px;
+    letter-spacing: .5px;
+    font-weight: 500;
+    font-style: normal;
+    color: #fff;
+    font-size: 40px;
+}
+
+.header-nav .entry-header p {
+    font-size: 18px;
+    color: white;
+    font-weight: 300; 
+    line-height: 1.70em;
+    /* margin: 0px auto; */
+}
+
+.div-text{
+	flex: 1;
+	align-items: center;
+}
+
+hr{
+	border-top: 5px solid white !important;
+}
+
+img{
+	width: 100%;
+}
+
+.noMargin {
+	margin: 0px;
+}
+
+.noPadding {
+	padding: 0px;
+}
+
+.margin-navbar{
+	margin-top: 30px;
+}
+
+.btn-page{
+	background-color: black;
+	color: white;
+	border: 0px;
+}
+
+
+.paddingCardText{
+	padding: 20px;
+}
+
+.paddingXsCard{
+	padding: 10px;
+}
+
+
+/*-------------------------------------------------------------------------
+Sobrecarga de elementos de Bootstrap
+ --------------------------------------------------------------------*/
+.navbar-light .navbar-toggler {
+    color: white;
+    border-color: white;
+}
+
+.nav-color{
+	transition-duration: 3s;
+	background-color: transparent;
+}
+
+.bg-black{
+	transition-duration: 5s;
+	background-color: black;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.bg-gray {
+	background-color: rgba(255, 255, 255, 0.144) !important;
+	padding-top: 15px;
+}
+
+.list-style li{
+	font-size: 16px;
+	font-weight: 600;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: 2px solid black;
+}
+
+.nocentral-card{
+	padding: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.central-card{
+	padding: 15px;	
+}
+
+.title-article{
+	font-size: 18px;
+}
+
+.card{
+	border: 0px !important;
+	margin-bottom: 15px;
+}
+
+/* .list-style li::before{
+	list-style-image: url()
+} */
+
+.navbar-collapse.collapse.show{
+	background-color: rgba(0, 0, 0, 0.75)
+}
+
+/* a.nav-link:hover{
+	background-color: white;
+	color: black;
+} */
+
+a{
+	color: white;
+}
+
+a::selection{
+	transition-duration: 3s;
+	
+}
+
+.carousel-control-next:hover,.carousel-control-prev:hover{
+	background-color: rgba(255, 255, 255, 0.35);
+}
+
+.card-body{
+	position: absolute;
+	display: none;
+	transition: .5s ease;
+}
+
+
+.card:hover .card-body{
+	transition: .5s ease;
+	display: block;
+	margin: 5px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.card-deck .card-body{
+	position: initial;
+	display: block !important;
+	color: black;
+}
+
+.card-header {
+    background-color: black;
+}
+
+#noticias .card:hover{
+	box-shadow: 0 2px 3px white, 0 2px 2px white;
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+li.list-group-item:hover a{
+	font-size: 18px;
+	font-weight: 600;
+	transition-duration: 3s;
+	text-align: center;
+}
+/*-------------------------------------------------------------------------
+ Extra large dispositivos (large desktops, 1200px and up) 
+ --------------------------------------------------------------------*/
+@media screen and (min-width: 1200px) { 
+	img{
+		height: 750px;
+	}
+
+	.card img{
+		height: 350px;
+	}
+
+	.content-header {
+		padding: 100px 0;
+		
+	}
+ }
+
+
+/*-------------------------------------------------------------------------
+ // dispositivos largos (escritorio, 992px and up) 
+ -------------------------------------------------------------------------*/
+@media screen and (min-width: 992px) and (max-width: 1199px) { 
+	img{
+		height: 550px;
+	}
+
+	.card img{
+		height: 250px;
+	}
+
+	.content-header {
+		padding: 40px 0;
+	}
+ }
+
+/*-------------------------------------------------------------------------
+ Dispositivos medianos (tablets, 768px and up) 
+ -------------------------------------------------------------------------*/
+@media screen and (min-width: 768px)  and (max-width: 991px) { 
+	img{
+		height: 450px;	
+	}
+
+	.card img{
+		height: 250px;
+	}
+
+	.content-header {
+		padding: 40px 0;
+	}
+ }
+
+/*-------------------------------------------------------------------------
+ // Dispositvos peuqeños (landscape celulares, 576px and up) 
+ -------------------------------------------------------------------------*/
+@media screen and (max-width: 767px) { 
+	img{
+		height: 200px;
+	}
+	.card img{
+		height: 280px;
+	}
+	
+	#headN .card-block{
+		display: none;
+	}
+ }
