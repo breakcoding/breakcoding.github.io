@@ -1,21 +1,65 @@
 app.controller('placeCtrl', function ($scope, $http, $sce) {
-    var url = 'https://api.foursquare.com/v2/venues/search?v=20161016&';
-    var credenciales = '&limit=10&client_id=YR1ALEYFHABZHNQMPN0IPR1GCHT0BLHH1UIAEYNINF41EIX3&client_secret=02WWTLZWCOKS4YYPZM23MX5Z14YMI5CATH0NG4G4YRF5TFI3';
+    var urlNew = 'https://api.foursquare.com/v2/venues/search?v=20161016&';
+    var search = '&intent=checkin&radius=7000&categoryId=';
+    // categoryId=4d4b7105d754a06374d81259
+    var credential = '&limit=5&client_id=YR1ALEYFHABZHNQMPN0IPR1GCHT0BLHH1UIAEYNINF41EIX3&client_secret=02WWTLZWCOKS4YYPZM23MX5Z14YMI5CATH0NG4G4YRF5TFI3';
 
     var urlPhotos = 'https://api.foursquare.com/v2/venues/';
     var credencialesPhot = 'photos?v=20161016&client_id=YR1ALEYFHABZHNQMPN0IPR1GCHT0BLHH1UIAEYNINF41EIX3&client_secret=02WWTLZWCOKS4YYPZM23MX5Z14YMI5CATH0NG4G4YRF5TFI3';
 
-    $scope.results
-    var index = 0;
+    // 4d4b7105d754a06374d81259
+
+    $scope.citySearch = function (query, category) {
+        console.log(query, category)
+        if (query.match(/_(\d)+$/)) {
+            query = "ll=" + query;
+        } else {
+            query = "near=" + query;
+        }
+        $http.get(urlNew + query + search + category + credential).then(onSearchData, onError);
+    };
+
+    $scope.categories = [{
+        name: 'Todos',
+        value: '4bf58dd8d48988d111941735,4bf58dd8d48988d16a941735,4bf58dd8d48988d1e0931735,52e81612bcbc57f1066b79f4,4bf58dd8d48988d16c941735,4bf58dd8d48988d16c941735,4bf58dd8d48988d1c1941735,4bf58dd8d48988d1ca941735,4bf58dd8d48988d1ce941735'
+    }, {
+        name: 'Restaurante japonés',
+        value: '4bf58dd8d48988d111941735'
+    }, {
+        name: 'Panadería',
+        value: '4bf58dd8d48988d16a941735'
+    }, {
+        name: 'Cafetería',
+        value: '4bf58dd8d48988d1e0931735'
+    }, {
+        name: 'Buffet',
+        value: '52e81612bcbc57f1066b79f4'
+    }, {
+        name: 'Hamburguesería',
+        value: '4bf58dd8d48988d16c941735'
+    }, {
+        name: 'Hamburguesería',
+        value: '4bf58dd8d48988d16c941735'
+    }, {
+        name: 'Restaurante mexicano',
+        value: '4bf58dd8d48988d1c1941735'
+    }, {
+        name: 'Pizzería',
+        value: '4bf58dd8d48988d1ca941735'
+    }
+        , {
+        name: 'Marisquería',
+        value: '4bf58dd8d48988d1ce941735'
+    }];
 
     var onSearchData = function (response) {
         $scope.results = response.data.response.venues;
         $scope.results.photo = [];
         $scope.results.googleUrl = [];
-        angular.forEach($scope.results, function(value, key) {
-            $http.get(urlPhotos+value.id+"/"+credencialesPhot).then(onPhoto, onError);
-            var google = 'https://www.google.com/maps/embed/v1/place?q='+ value.location.lat+','+ value.location.lng +'&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
-            $scope.results.googleUrl.push({"urlGoogle": google});
+        angular.forEach($scope.results, function (value, key) {
+            $http.get(urlPhotos + value.id + "/" + credencialesPhot).then(onPhoto, onError);
+            var google = 'https://www.google.com/maps/embed/v1/place?q=' + value.location.lat + ',' + value.location.lng + '&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
+            $scope.results.googleUrl.push({ "urlGoogle": google });
         });
     }
 
@@ -23,24 +67,24 @@ app.controller('placeCtrl', function ($scope, $http, $sce) {
         $scope.error = "No se encontro ningun dato";
     }
 
-    var onPhoto = function(response){
+    var onPhoto = function (response) {
         var data = response.data.response.photos;
-        if(data.count){
+        if (data.count) {
             var width = data.items[0].width;
             var heigth = data.items[0].height;
             var prefix = data.items[0].prefix;
             var suffix = data.items[0].suffix;
-            var url = prefix+width+"x"+heigth+suffix;
-            $scope.results.photo.push({"photoUrlG":url});
-        }else{
+            var url = prefix + width + "x" + heigth + suffix;
+            $scope.results.photo.push({ "photoUrlG": url });
+        } else {
             var url = 'https://csmmemoriahistorica.files.wordpress.com/2014/09/default-no-image.png';
-            $scope.results.photo.push({"photoUrlG":url});
+            $scope.results.photo.push({ "photoUrlG": url });
         }
     }
 
-    $scope.trustSrc = function(src) {
+    $scope.trustSrc = function (src) {
         return $sce.trustAsResourceUrl(src);
-      }
+    }
 
     $scope.isEmpty = function (obj) {
         for (var prop in obj) {
@@ -50,12 +94,14 @@ app.controller('placeCtrl', function ($scope, $http, $sce) {
         return true;
     };
 
-    $scope.citySearch = function (query) {
-        if (query.match(/_(\d)+$/)) {
-            query = "ll=" + query;
-        } else {
-            query = "near=" + query;
-        }
-        $http.get(url + query + credenciales).then(onSearchData, onError);
-    }
+    // $scope.categorySearch = function(query,category){
+    //     if (query.match(/_(\d)+$/)) {
+    //         query = "ll=" + query;
+    //     } else {
+    //         query = "near=" + query;
+    //     }
+    //     $http.get(url + query + credenciales).then(onSearchData, onError);
+    // };
+
+
 });

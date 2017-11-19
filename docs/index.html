@@ -66,14 +66,18 @@
 					<div class="col">
 						<header class="entry-header">
 							<h1 class="page-title">Buscar para comer pronto...</h1>
-							<form class="text-center" ng-submit="citySearch(query)">
+							<form class="text-center" ng-submit="citySearch(query,category)">
 								<div class="input-group">
-									<input type="text" class="form-control" placeholder="Buscar algo cerca" id="latlon" ng-change="query" ng-model="query" required>
+									<input type="text" class="form-control" placeholder="Ingrese ciudad para buscarte algo" id="latlon" ng-change="query" ng-model="query"
+									 required>
+									<select class="form-control" ng-model="category" ng-init="category = category || categories[0].value" ng-options="option.value as option.name for option in categories">
+									</select>
 									<span class="input-group-btn">
 										<button class="btn btn-outline-warning" type="submit">Buscale</button>
 									</span>
 								</div>
-								<small id="helpId" class="form-text text-muted">Ingresa el lugar para ver mas opciones cerca de la misma.</small>
+								<small id="helpId" class="form-text text-muted">Ingresa el lugar para ver mas opciones cerca de la misma. Permitanos utilizar tus localizacion para encontrar lo
+									mejor posible.</small>
 								<small id="helpId" class="form-text text-muted">{{ query }}</small>
 								<a href="#" id="location" class="btn-link">
 									<i class="fa fa-map-marker" aria-hidden="true"></i> Usar mi ubicacion
@@ -86,7 +90,9 @@
 			</div>
 		</div>
 	</section>
+
 	<results></results>
+
 	<footer>
 		<div class="">
 			<div class="row noMargin bg-gray">
