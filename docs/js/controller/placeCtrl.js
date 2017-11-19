@@ -1,6 +1,6 @@
-app.controller('placeCtrl', function ($scope, $http) {
+app.controller('placeCtrl', function ($scope, $http, $sce) {
     var url = 'https://api.foursquare.com/v2/venues/search?v=20161016&';
-    var credenciales = '&client_id=YR1ALEYFHABZHNQMPN0IPR1GCHT0BLHH1UIAEYNINF41EIX3&client_secret=02WWTLZWCOKS4YYPZM23MX5Z14YMI5CATH0NG4G4YRF5TFI3';
+    var credenciales = '&limit=1&client_id=YR1ALEYFHABZHNQMPN0IPR1GCHT0BLHH1UIAEYNINF41EIX3&client_secret=02WWTLZWCOKS4YYPZM23MX5Z14YMI5CATH0NG4G4YRF5TFI3';
 
     var urlPhotos = 'https://api.foursquare.com/v2/venues/';
     var credencialesPhot = 'photos?v=20161016&client_id=YR1ALEYFHABZHNQMPN0IPR1GCHT0BLHH1UIAEYNINF41EIX3&client_secret=02WWTLZWCOKS4YYPZM23MX5Z14YMI5CATH0NG4G4YRF5TFI3';
@@ -11,14 +11,20 @@ app.controller('placeCtrl', function ($scope, $http) {
     var onSearchData = function (response) {
         $scope.results = response.data.response.venues;
         $scope.results.photo = [];
+        $scope.results.googleUrl = [];
+        
+        // console.log($scope.results);
 
-        console.log($scope.results[0]);
+
 
         //$http.get(urlPhotos+$scope.results[0].id+"/"+credencialesPhot).then(onPhoto, onError);
 
-        // angular.forEach($scope.results, function(value, key) {
-        //     $http.get(urlPhotos+value.id+"/"+credencialesPhot).then(onPhoto, onError);
-        // });
+        angular.forEach($scope.results, function(value, key) {
+            $http.get(urlPhotos+value.id+"/"+credencialesPhot).then(onPhoto, onError);
+            var google = 'https://www.google.com/maps/embed/v1/place?q='+ value.location.lat+','+ value.location.lng +'&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
+            $scope.results.googleUrl.push({"urlGoogle": google});
+        });
+        // console.log($scope.results);
     }
 
     var onError = function () {
@@ -26,27 +32,25 @@ app.controller('placeCtrl', function ($scope, $http) {
     }
 
     var onPhoto = function(response){
-        // console.log(response.data.response.photos);
-        var photo = {
-            photoUrlG: ""
-        };
         var data = response.data.response.photos;
         if(data.count){
             var width = data.items[0].width;
             var heigth = data.items[0].height;
             var prefix = data.items[0].prefix;
             var suffix = data.items[0].suffix;
-            photo.photoUrlG = prefix+width+"x"+heigth+suffix;
-            //  $scope.results.get(index).push(photo);
-             console.log( $scope.results);
-             index = index + 1;
+            var url = prefix+width+"x"+heigth+suffix;
+            $scope.results.photo.push({"photoUrlG":url});
         }else{
             var url = 'http://mxcdn.ar-cdn.com/recipes/xlarge/nophoto.svg';
-            index = index + 1;
+            $scope.results.photo.push({"photoUrlG":url});
             // $scope.results.photo.push({"photoUrlG": url});
         }
          
     }
+
+    $scope.trustSrc = function(src) {
+        return $sce.trustAsResourceUrl(src);
+      }
 
     $scope.isEmpty = function (obj) {
         for (var prop in obj) {
