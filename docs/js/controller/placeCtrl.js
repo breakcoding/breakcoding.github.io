@@ -21,7 +21,7 @@ app.controller('placeCtrl', function ($scope, $http, $sce) {
 
         angular.forEach($scope.results, function(value, key) {
             $http.get(urlPhotos+value.id+"/"+credencialesPhot).then(onPhoto, onError);
-            var google = 'https://www.google.com/maps/embed/v1/place?q='+ value.location.lat+','+ value.location.lng +'&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
+            var google = 'https://www.google.com/maps/embed/v1/place?q='+ value.location.lat+','+ value.location.lng +'&title='+value.name+'&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
             $scope.results.googleUrl.push({"urlGoogle": google});
         });
         // console.log($scope.results);
@@ -41,7 +41,7 @@ app.controller('placeCtrl', function ($scope, $http, $sce) {
             var url = prefix+width+"x"+heigth+suffix;
             $scope.results.photo.push({"photoUrlG":url});
         }else{
-            var url = 'http://mxcdn.ar-cdn.com/recipes/xlarge/nophoto.svg';
+            var url = 'https://csmmemoriahistorica.files.wordpress.com/2014/09/default-no-image.png';
             $scope.results.photo.push({"photoUrlG":url});
             // $scope.results.photo.push({"photoUrlG": url});
         }
