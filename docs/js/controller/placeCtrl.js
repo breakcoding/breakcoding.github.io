@@ -21,7 +21,7 @@ app.controller('placeCtrl', function ($scope, $http, $sce) {
 
         angular.forEach($scope.results, function(value, key) {
             $http.get(urlPhotos+value.id+"/"+credencialesPhot).then(onPhoto, onError);
-            var google = 'https://www.google.com/maps/embed/v1/place?q='+ value.location.lat+','+ value.location.lng +'&title='+value.name+'&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
+            var google = 'https://www.google.com/maps/embed/v1/place?q='+ value.location.lat+','+ value.location.lng +'&key=AIzaSyAWGcEIE20vKJ3HfeZgSAiWHfsFFocOtk8';
             $scope.results.googleUrl.push({"urlGoogle": google});
         });
         // console.log($scope.results);
